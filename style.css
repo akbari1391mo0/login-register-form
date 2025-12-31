@@ -1,0 +1,448 @@
+/* ==============================
+   GLOBAL RESET & BASIC SETTINGS
+   - Removes default paddings/margins
+   - Ensures predictable sizing
+============================== */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* ==============================
+   BODY LAYOUT & BACKGROUND
+   - Full viewport height
+   - Flex center layout
+   - Background image overlayed with dark gradient
+============================== */
+body {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.35)),
+    url("./assets/bg-body.jpg") center/cover no-repeat;
+  font-family: varela-round;
+}
+
+/* ==============================
+   CUSTOM FONTS
+============================== */
+@font-face {
+  font-family: "Agent-Orange-d";
+  src: url("./assets/AgentOrange-font-d.ttf");
+}
+
+@font-face {
+  font-family: "varela-round";
+  src: url("./assets/varela-round.ttf");
+}
+
+/* ==============================
+   LINK DEFAULT STYLE
+============================== */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ==============================
+   FORM DEFAULT FONT
+============================== */
+button,
+input {
+  font-family: varela-round;
+}
+
+/* ==============================
+   MAIN WHITE CONTAINER
+   - Holds forms & panels
+   - Smooth transition for slide animation
+============================== */
+.container {
+  width: 1000px;
+  height: 640px;
+  overflow: hidden;
+  background: #ffffff;
+  border-radius: 20px;
+  transition: all 2s linear;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ==============================
+   ACTIVE CONTAINER STATE
+   - Moves forms/panels horizontally when toggled
+============================== */
+.container.active .form-container {
+  transform: translateX(100%);
+}
+.container.active .panel-wrapper {
+  transform: translateX(-100%);
+}
+
+/* ==============================
+   FORM SECTION (LEFT SIDE)
+   - Vertical stacked layout
+============================== */
+.container .form-container {
+  width: 50%;
+  background: #ffffffdd;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0.5rem;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 2s ease;
+}
+
+/* ==============================
+   FORM SECTION TITLE
+============================== */
+.container .form-container .form-title {
+  font-size: 1.3rem;
+  margin-bottom: 0.7rem;
+  color: #ccdbfd;
+  font-family: Agent-Orange-d;
+  background-color: #134074;
+  padding: 0.5rem;
+  border-radius: 16px;
+}
+
+/* ==============================
+   FORM STATES
+   - Only active form is visible & usable
+============================== */
+.container .form-container .form {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  position: absolute;
+  width: 100%;
+}
+.container .form-container .form.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  position: relative; /* puts form back in flow */
+}
+
+/* ==============================
+   FORM INPUT GROUP
+============================== */
+.container .form-container .form .input-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin: 0.4rem 0;
+}
+
+/* ==============================
+   INPUT FIELDS
+   - Light shadow hover focus effect
+============================== */
+.container .form-container .form .input-box .form-input {
+  width: 70%;
+  padding: 0.75rem 1rem;
+  background: #ccdbfd;
+  border: 2px solid #13315c;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #13315c;
+  transition: all 250ms ease-in-out;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(13, 48, 92, 0.1);
+}
+
+/* Placeholder color adjustments */
+.container .form-container .form .input-box .form-input::placeholder {
+  color: #2b2b2bfe;
+}
+.container .form-container .form .input-box .form-input:hover::placeholder {
+  color: #0b2545;
+}
+
+/* Focus state — stronger effect */
+.container .form-container .form .input-box .form-input:focus {
+  border-color: #134074;
+  background: #ccdbfd;
+  box-shadow: 0 6px 15px rgba(13, 48, 92, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Hover visual feedback */
+.container .form-container .form .input-box .form-input:hover {
+  border-color: #134074;
+  box-shadow: 0 4px 15px rgba(19, 64, 116, 0.35),
+    0 0 10px rgba(19, 64, 116, 0.25);
+  transform: translateY(-1px);
+}
+
+/* ==============================
+   INPUT ERROR STYLE
+============================== */
+.form-container .form-container .form .input-box .form-input.wrong-input {
+  border: 3px solid #ce3b3b;
+}
+
+/* Error text under input */
+.container .form-container .form .input-box .alert-text {
+  display: block;
+  margin-top: 0.5rem;
+  color: #cf2828;
+  margin-left: 0.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: overline;
+}
+
+/* ==============================
+   PASSWORD FIELD (WITH EYE ICON)
+============================== */
+.container .form-container .form .input-box .password-box-inner {
+  position: relative;
+  width: 70%;
+}
+.container .form-container .form .input-box .password-input {
+  width: 100%;
+  padding: 0.75rem 2.6rem 0.75rem 1rem;
+}
+.container .form-container .form .input-box .eye-btn {
+  position: absolute;
+  top: 50%;
+  right: 0.8rem;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #134074;
+  padding: 0.3rem;
+  transition: all 0.3s ease;
+}
+.container .form-container .form .input-box .eye-btn i {
+  pointer-events: none;
+}
+
+/* ==============================
+   FORM FOOTER ITEMS
+============================== */
+.container .form-container .form .ends-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+.container .form-container .form .ends-item .forgot-pass-text {
+  color: #0b2545;
+  font-size: 1rem;
+  text-decoration: underline;
+  transition: all 0.5s linear;
+}
+.container .form-container .form .ends-item .forgot-pass-text:hover {
+  transform: scale(1.06);
+}
+
+/* ==============================
+   MAIN FORM BUTTON
+============================== */
+.container .form-container .form .form-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 12px;
+  background-color: #134074;
+  color: #ccdbfd;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(19, 64, 116, 0.3);
+  width: 70%;
+  border: 2px solid #134074;
+  margin-bottom: 0.5rem;
+}
+
+/* Button hover highlight */
+.container .form-container .form .form-btn:hover {
+  background-color: #ccdbfd;
+  color: #0b2545;
+  border-color: #0b2545;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(19, 64, 116, 0.35);
+}
+
+/* Navigate link under form */
+.container .form-container .form .navigate-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #13315c;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.container .form-container .form .navigate-link:hover {
+  color: #8da9c4;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+/* ==============================
+   RIGHT PANEL (SOCIAL / TEXT / BUTTONS)
+============================== */
+.container .panel-wrapper {
+  width: 50%;
+  background-color: #ccdbfd;
+  height: 100%;
+  border-radius: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: transform 2s ease;
+  gap: 0.7rem;
+}
+
+/* ==============================
+   FOLLOW ICONS
+   - Social media with tooltips
+============================== */
+.container .panel-wrapper .follow-our-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+.container .panel-wrapper .follow-our-icons .follow-icon {
+  padding: 0.6rem;
+  background-color: #134074;
+  color: #ccdbfd;
+  border-radius: 14px;
+  cursor: pointer;
+  position: relative;
+  transition: all 350ms ease;
+  border: 2px solid transparent;
+  box-shadow: 0 3px 10px rgba(13, 48, 92, 0.25);
+}
+.container .panel-wrapper .follow-our-icons .follow-icon i {
+  font-size: 1.3rem;
+  transition: transform 300ms ease, color 300ms ease;
+}
+
+/* Icon hover effect */
+.container .panel-wrapper .follow-our-icons .follow-icon:hover {
+  background-color: #ccdbfd;
+  color: #051426;
+  border-color: #13315c;
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 6px 18px rgba(19, 49, 92, 0.35),
+    0 0 12px 4px rgba(204, 219, 253, 0.6);
+}
+.container .panel-wrapper .follow-our-icons .follow-icon:hover i {
+  transform: scale(1.15);
+  color: #13315c;
+}
+
+/* Tooltip with custom text */
+.container .panel-wrapper .follow-our-icons .follow-icon::after {
+  content: attr(data-hover-text);
+  position: absolute;
+  top: -67%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #13315c;
+  color: #ccdbfd;
+  padding: 0.25rem 0.6rem;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  transition: opacity 350ms ease, transform 350ms ease;
+}
+.container .panel-wrapper .follow-our-icons .follow-icon:hover::after {
+  opacity: 1;
+  transform: translate(-50%, -2px);
+}
+
+/* Panel title text */
+.container .panel-wrapper .panel-title {
+  font-family: Agent-Orange-d;
+  font-size: 2.2rem;
+}
+
+/* Panel description */
+.container .panel-wrapper .panel-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+
+
+/* ==============================
+   Panel Button
+============================== */
+.container .panel-wrapper .panel-btn {
+  align-self: center;
+  background-color: #eef4ed;
+  background-image: none;
+  background-position: 0 90%;
+  background-repeat: repeat no-repeat;
+  background-size: 4px 3px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #13315c;
+  box-shadow: rgba(13, 48, 92, 0.25) 10px 20px 20px -10px;
+  box-sizing: border-box;
+  color: #051426;
+  cursor: pointer;
+  display: inline-block;
+  font-family: varela-round, Agent-Orange-d;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 23px;
+  outline: none;
+  padding: 0.75rem 1.2rem;
+  text-decoration: none;
+  transition: all 250ms ease-in-out;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ==============================
+   Active Panel Button
+============================== */
+.container .panel-wrapper .panel-btn.active {
+  background-color: #134074;
+  color: #ffffff;
+  border-color: #0b2545;
+  box-shadow: rgba(13, 48, 92, 0.3) 6px 12px 15px -5px;
+}
+
+.container .panel-wrapper .panel-btn:hover {
+  box-shadow: rgba(13, 48, 92, 0.35) 4px 10px 10px -5px;
+  transform: translateY(2px) scale(1.08);
+  background-color: #8da9c4;
+  color: #ffffff;
+}
+
+.container .panel-wrapper .panel-btn:focus {
+  box-shadow: rgba(13, 48, 92, 0.4) 3px 6px 5px -4px;
+}
